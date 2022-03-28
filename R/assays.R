@@ -1,6 +1,5 @@
 library(tidyverse)
 library(janitor)
-library(RSQLite)
 
 
 assays = read_csv("data/Assays/fecal_database.csv", show_col_types = FALSE) %>% 
