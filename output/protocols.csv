@@ -1,0 +1,15 @@
+protocol_id,lab,dilution,volume_used,hormone
+CB325,Boonstra,32.3333333333333,5.6,Cortisol
+CB91,Boonstra,9,1.6,Cortisol
+CB3210,Boonstra,32.3333333333333,10,Cortisol
+CB6810,Boonstra,68.6666666666667,10,Cortisol
+CB32NA,Boonstra,32.3333333333333,NA,Cortisol
+CD10010,Dantzer,100,10,Cortisol
+CD325,Dantzer,32.3333333333333,5.6,Cortisol
+CD1005,Dantzer,100,5.6,Cortisol
+CBNANA,Boonstra,NA,NA,Cortisol
+CB10010,Boonstra,100,10,Cortisol
+CDNANA,Dantzer,NA,NA,Cortisol
+CD1005,Dantzer,100,5,Cortisol
+TB910,Boonstra,9,10,Testosterone
+TD910,Dantzer,9,10,Testosterone

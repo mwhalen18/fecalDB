@@ -65,7 +65,7 @@ androgen = assays %>%
   unique() %>% 
   mutate(hormone = "Testosterone")
 
-hormones = bind_rows(cort_final,
-          androgen)
+hormones = bind_rows(cort_final,androgen) %>% 
+  mutate(protocol_id = paste(substr(hormone,1,1), substr(lab,1,1), floor(dilution), floor(volume_used), sep = ""))
 
 write_csv(hormones, "output/hormones_raw.csv")
