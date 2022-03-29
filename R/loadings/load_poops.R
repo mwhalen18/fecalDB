@@ -1,11 +1,7 @@
 # Poop-link prep
 library(RMySQL)
 library(tidyverse)
-con = dbConnect(MySQL(), user = "matthewrwhalen",
-                password = "HedN.GUK18",
-                host = "krspfecals.cfvasuoihvfm.ca-central-1.rds.amazonaws.com",
-                port = 3306,
-                dbname = "krspfecalsDEV")
+con = dbConnect(MySQL(), group = "krspfecals-DEV")
 
 
 poop = read_csv("output/poops.csv", show_col_types = FALSE) %>% 
