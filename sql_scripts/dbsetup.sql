@@ -30,6 +30,7 @@ CREATE TABLE IF NOT EXISTS `krspfecalsDEV`.`Extract` (
   contaminants_removed VARCHAR(255),
   mass_g FLOAT,
   extra TINYINT,
+  box_id INT,
   FOREIGN KEY (poop_id) REFERENCES `krspfecalsDEV`.`Poop` (poop_id)
 		ON DELETE NO ACTION
 		ON UPDATE CASCADE
