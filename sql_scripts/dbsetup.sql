@@ -7,9 +7,16 @@ CREATE TABLE IF NOT EXISTS `krspfecalsDEV`.`Poop` (
   poop_id VARCHAR(255) NOT NULL PRIMARY KEY,
   trapping_id INT,
   squirrel_id INT,
+  `year` INT,
   poop_time INT,
   comments VARCHAR(255) NULL
 );
+
+CREATE TABLE IF NOT EXISTS `krspfecalsDEV`.`PoopDupl` 
+LIKE `krspfecalsDEV`.`Poop`;
+
+ALTER TABLE `krspfecalsDEV`.`PoopDupl`
+DROP PRIMARY KEY;
 
 CREATE TABLE IF NOT EXISTS `krspfecalsDEV`.`Extract` (
   extract_id INT NOT NULL PRIMARY KEY,
