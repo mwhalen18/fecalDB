@@ -19,13 +19,13 @@ ALTER TABLE `krspfecalsDEV`.`PoopDupl`
 DROP PRIMARY KEY;
 
 CREATE TABLE IF NOT EXISTS `krspfecalsDEV`.`Extract` (
-  extract_id INT NOT NULL PRIMARY KEY,
+  id INT NOT NULL PRIMARY KEY,
   poop_id VARCHAR(255),
   extraction_date DATE,
   extraction_observer_id VARCHAR(5),
   extraction_volume FLOAT,
-  weight_date DATE,
-  weight_observer_id VARCHAR(5),
+  weigh_date DATE,
+  weigh_observer_id VARCHAR(5),
   hair TINYINT,
   contaminants_removed VARCHAR(255),
   mass_g FLOAT,
@@ -36,8 +36,12 @@ CREATE TABLE IF NOT EXISTS `krspfecalsDEV`.`Extract` (
 		ON UPDATE CASCADE
 );
 
+CREATE TABLE IF NOT EXISTS `krspfecalsDEV`.`Extractnomatch` like `krspfecalsDEV`.`Extract`;
+ALTER TABLE `krspfecalsDEV`.`Extractnomatch`
+DROP PRIMARY KEY;
+
 CREATE TABLE IF NOT EXISTS `krspfecalsDEV`.`Protocol` (
-	protocol_id VARCHAR(45) NOT NULL PRIMARY KEY,
+	id VARCHAR(45) NOT NULL PRIMARY KEY,
     eia_lab VARCHAR(45),
 	dilution FLOAT,
 	volume_used FLOAT,
@@ -53,10 +57,15 @@ CREATE TABLE IF NOT EXISTS `krspfecalsDEV`.`Assay` (
   observer_id VARCHAR(5),
   concentration FLOAT,
   cv FLOAT,
-  FOREIGN KEY (extract_id) REFERENCES `krspfecalsDEV`.`Extract` (extract_id)
+  FOREIGN KEY (extract_id) REFERENCES `krspfecalsDEV`.`Extract` (id)
     ON DELETE NO ACTION
     ON UPDATE CASCADE,
-  FOREIGN KEY (protocol_id) REFERENCES `krspfecalsDEV`.`Protocol` (protocol_id)
+  FOREIGN KEY (protocol_id) REFERENCES `krspfecalsDEV`.`Protocol` (id)
     ON DELETE NO ACTION
     ON UPDATE CASCADE
-)
+);
+
+CREATE TABLE IF NOT EXISTS `krspfecalsDEV`.`Assaynomatch` like `krspfecalsDEV`.`Assay`;
+ALTER TABLE `krspfecalsDEV`.`Assaynomatch`
+DROP PRIMARY KEY,
+change id id INT;

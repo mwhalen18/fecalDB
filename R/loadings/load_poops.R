@@ -1,4 +1,5 @@
 # Poop-link prep
+options(tidyverse.quiet = TRUE)
 library(RMySQL)
 library(tidyverse)
 con = dbConnect(MySQL(), group = "krspfecals-DEV")
@@ -12,6 +13,8 @@ duplicate_poops = poop %>%
   filter(n_distinct(trapping_id) > 1) %>% 
   ungroup()
 
+write_csv(poop, "output/final_Poop.csv")
+write_csv(duplicate_poops, "output/final_poop_duplicates.csv")
 dbWriteTable(con, "Poop", poop, append = TRUE, row.names = FALSE)
 dbWriteTable(con, "DuplPoop", duplicate_poops, append = TRUE, row.names = FALSE)
-dbDisconnect(con); rm(con)
+dbDisconnect(con);rm(con)

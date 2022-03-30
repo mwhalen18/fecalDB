@@ -9,7 +9,7 @@ con = dbConnect(MySQL(), group = "krsp-aws")
 poop_external <- read_csv("https://raw.githubusercontent.com/KluaneRedSquirrelProject/poop/master/output/poop_external.csv", show_col_types = FALSE) %>%
   mutate(poop_time = as.character(poop_time))
 
-source('R/helpers.R')
+source('R/src/helpers.R')
 
 trapping = DBI::dbGetQuery(con, statement = read_file("sql_scripts/trapping_connection.sql")) %>% 
   tibble()
@@ -34,9 +34,15 @@ poop_2008 = trapping %>%
   extract_poopID() %>% 
   select(contains("_id"), year, poop_time, comments)
 
-poops_external = poop_external %>% 
+poop_2ext = poop_external %>% 
   filter(year %in% c(2006:2011),
          !is.na(poop_id)) %>% 
+  select(contains("_id"), year, poop_time, comments)
+
+# 2006-(!2008)-2011 come from poop_extrernal
+
+poop_ext = poop_external %>% 
+  filter(!is.na(poop_id)) %>% 
   select(contains("_id"), year, poop_time, comments)
 
 
@@ -55,6 +61,16 @@ poop_2012 = dba_trapping %>%
 
 # No data fro 2013
 
+# 2014 through 2016
+
+poop_20137 = trapping %>% 
+  filter(year(date) %in% 2013:2017,
+         comments != "") %>% 
+  extract_poopID() %>% 
+  mutate(poop_time = extract_pt(comments)) %>% 
+  select(contains("_id"), year, poop_time, comments)
+  
+
 # 2018 on, store this function so that we can use it in the future
 poop_2018_on = map(2018:2021, pooperScooper, .data = trapping) %>% 
   bind_rows()
@@ -64,7 +80,8 @@ poops = ls(pattern = "poop_2") %>%
   map(eval) %>% 
   bind_rows() %>% 
   mutate(across(!c(poop_id, comments), as.integer)) %>% 
-  select(contains("_id"), year, poop_time, comments)
+  select(contains("_id"), year, poop_time, comments) %>% 
+  unique()
 
 write_csv(poops, file = "output/poops.csv")
 dbDisconnect(con); rm(con)
